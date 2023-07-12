@@ -58,8 +58,11 @@ const { loadPyodide } = require("pyodide");
     pyodide.registerJsModule("cloner_git", cloner_git);
     console.log = saveConsoleLog;
     const text = await contents(resolve(__dirname, python_script));
-    return pyodide.runPythonAsync(text);
+    const my_namespace = pyodide.toPy({ argv: process.argv.slice(2) });
+    return await pyodide.runPythonAsync(text, { globals: my_namespace });
   }
 
-  await run_python('index.py');
+  const retVal = await run_python('index.py');
+  process.exitCode = retVal;
 })();
+

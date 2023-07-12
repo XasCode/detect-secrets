@@ -56,10 +56,14 @@ async def run():
   # run detect-secrets
   from detect_secrets import main as detect_secrets
   try:
-    foo = detect_secrets.main(['-C', '/local_directory', 'scan', '--no-verify'])
+    detect_secrets.main(argv)
+    return 0
   except SystemExit as e:
-    print(e)
+    if (e.code != 0):
+      print("SystemExit: ", e)
+    return e.code
 
 # run main
-asyncio.ensure_future(run())
-loop.run_forever()
+#asyncio.ensure_future(run())
+#loop.run_forever()
+loop.run_until_complete(asyncio.gather(run()))
