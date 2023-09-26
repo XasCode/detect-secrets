@@ -13,6 +13,6 @@
   "license": "MIT",
   "dependencies": {
     "@jestaubach/cloner-git": "^0.1.13",
-    "pyodide": "^0.23.4"
+    "pyodide": "^0.24.1"
   }
 }
