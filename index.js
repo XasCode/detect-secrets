@@ -63,6 +63,8 @@ const { loadPyodide } = require("pyodide");
   }
 
   const retVal = await run_python('index.py');
-  process.exitCode = retVal;
+  const exitCode = typeof retVal?.toJs === 'function' ? retVal.toJs() : retVal;
+  retVal?.destroy?.();
+  process.exitCode = exitCode ?? 0;
 })();
 
